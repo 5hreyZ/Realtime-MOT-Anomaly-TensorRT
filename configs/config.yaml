@@ -1,0 +1,65 @@
+# Configuration for Real-Time Multi-Object Tracking & Visual Anomaly Detection
+# Tailored with DVCon Task-Conditioned Object Selection & Knowledge Distillation
+
+project_name: "Real-Time Multi-Object Tracking & Visual Anomaly Detection"
+version: "2.1.0"
+
+system:
+  device: "cuda"          # "cuda" on GPU workstation, "cpu" or "arm" on PYNQ-Z2
+  num_workers: 4
+  seed: 42
+
+detection:
+  architecture: "yolov10n_task_aware"   # Lightweight student model
+  parent_teacher: "yolov10x_task_expert" # Large teacher model for KD
+  weights_path: "weights/student_detector.pt"
+  input_resolution: [640, 640]
+  conf_threshold: 0.25
+  iou_threshold: 0.45
+  num_classes: 80
+  classes_file: "data/coco_labels.txt"
+
+task_reasoning:
+  affordance_matrix_path: "configs/affordance_matrix.json"
+  default_task_id: 1                  # e.g., "serve wine"
+  scoring_mode: "multiplicative"      # final_score = confidence * affordance_priority
+  min_affordance_cutoff: 0.15
+
+distillation:
+  temperature: 3.0                    # Softmax temperature for task affordance distribution
+  alpha_task_distill: 0.6             # Weight for teacher-student task logit KL-divergence
+  beta_feature_distill: 0.25          # Weight for intermediate feature map L2 distillation
+  gamma_hard_loss: 0.15               # Weight for ground truth detection loss
+  distillation_epochs: 30
+  learning_rate: 0.001
+  batch_size: 16
+
+tracking:
+  tracker_type: "ByteTrack"
+  track_high_thresh: 0.6
+  track_low_thresh: 0.1
+  new_track_thresh: 0.7
+  match_thresh: 0.8
+  track_buffer: 30                    # Frames to buffer lost tracks before dropping
+  frame_rate: 30
+  temporal_smoothing_alpha: 0.85      # Exponential smoothing for tracked affordance score
+
+anomaly_detection:
+  model_type: "ConvAutoencoder"
+  weights_path: "weights/autoencoder_fp16.onnx"
+  latent_dim: 128
+  reconstruction_threshold: 0.045     # Mean-squared-error threshold on normalized patch
+  hazard_penalty_multiplier: 2.5      # Flag affordance anomaly when hazardous tool selected
+  window_size: 16                     # Frames to aggregate anomaly temporal spikes
+
+deployment:
+  tensorrt:
+    precision: "fp16"
+    workspace_size_mb: 2048
+    target_fps: 62.0
+    max_latency_ms: 16.0
+  pynq_edge:
+    backend: "opencv_dnn"             # Runs on PYNQ-Z2 ARM Cortex-A9
+    target: "arm_neon"
+    input_resolution: [320, 320]      # Scaled down for real-time edge processing
+    cam_device_id: 0                  # e-con Systems See3CAM USB camera

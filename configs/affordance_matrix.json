@@ -1,0 +1,97 @@
+{
+  "tasks": {
+    "1": {
+      "task_id": 1,
+      "task_name": "serve wine",
+      "description": "Select an appropriate vessel to pour and serve wine to a guest",
+      "affordances": {
+        "wine glass": 1.00,
+        "cup": 0.90,
+        "bottle": 0.50,
+        "bowl": 0.10
+      },
+      "hazard_classes": ["knife", "scissors"]
+    },
+    "2": {
+      "task_id": 2,
+      "task_name": "pour sugar",
+      "description": "Dispense granulated sugar cleanly into a container or beverage",
+      "affordances": {
+        "spoon": 1.00,
+        "bowl": 0.70,
+        "cup": 0.30,
+        "bottle": 0.15
+      },
+      "hazard_classes": ["knife", "scissors"]
+    },
+    "3": {
+      "task_id": 3,
+      "task_name": "open parcel",
+      "description": "Safely cut tape and cardboard to open a sealed shipping box",
+      "affordances": {
+        "scissors": 1.00,
+        "knife": 0.75
+      },
+      "hazard_classes": ["fork", "spoon"]
+    },
+    "4": {
+      "task_id": 4,
+      "task_name": "water plant",
+      "description": "Deliver water to potted indoor flora without spillage",
+      "affordances": {
+        "bottle": 0.90,
+        "cup": 0.70,
+        "vase": 0.60,
+        "bowl": 0.40
+      },
+      "hazard_classes": ["knife", "laptop", "cell phone"]
+    },
+    "5": {
+      "task_id": 5,
+      "task_name": "slice fruit",
+      "description": "Prepare and divide fruits or vegetables on a cutting surface",
+      "affordances": {
+        "knife": 1.00,
+        "scissors": 0.20
+      },
+      "hazard_classes": ["spoon", "cell phone"]
+    },
+    "6": {
+      "task_id": 6,
+      "task_name": "eat soup",
+      "description": "Consume hot liquid soup from a bowl with proper utensils",
+      "affordances": {
+        "spoon": 1.00,
+        "bowl": 0.80,
+        "cup": 0.40
+      },
+      "hazard_classes": ["knife", "scissors", "fork"]
+    },
+    "7": {
+      "task_id": 7,
+      "task_name": "clean surface",
+      "description": "Wipe down a contaminated desk or kitchen counter",
+      "affordances": {
+        "sponge": 1.00,
+        "towel": 0.85,
+        "bottle": 0.30
+      },
+      "hazard_classes": ["laptop", "keyboard"]
+    },
+    "8": {
+      "task_id": 8,
+      "task_name": "read document",
+      "description": "Inspect text documentation or review reports",
+      "affordances": {
+        "book": 1.00,
+        "laptop": 0.85,
+        "cell phone": 0.70
+      },
+      "hazard_classes": ["knife", "wine glass"]
+    }
+  },
+  "default_affordance": 0.05,
+  "confidence_threshold": 0.25,
+  "affordance_weight": 0.5,
+  "confidence_weight": 0.5
+}

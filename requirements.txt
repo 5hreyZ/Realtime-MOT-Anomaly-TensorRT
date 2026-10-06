@@ -1,0 +1,20 @@
+# Real-Time Multi-Object Tracking & Visual Anomaly Detection Dependencies
+# Optimized for edge deployment and GPU acceleration
+
+numpy>=1.23.0
+pyyaml>=6.0
+pillow>=9.5.0
+
+# Deep Learning Frameworks (Workstation / GPU Server)
+torch>=2.0.0
+torchvision>=0.15.0
+
+# Vision & Video Processing
+opencv-python>=4.7.0
+scipy>=1.10.0
+matplotlib>=3.7.0
+
+# Export & Acceleration (Optional for edge deployment)
+# onnx>=1.14.0
+# onnxruntime>=1.15.0
+# tensorrt>=8.6.0  # NVIDIA GPU targets
